@@ -1,0 +1,46 @@
+name: Build Extension
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Create build directory
+      run: mkdir -p build
+      
+    - name: Copy extension files
+      run: |
+        cp manifest.json build/
+        cp background.js build/
+        cp content.js build/
+        cp content.css build/
+        cp popup.html build/
+        cp popup.js build/
+        cp prompts-reference.js build/
+        cp -r images build/
+        
+    - name: Create ZIP file
+      working-directory: build
+      run: zip -r ../translate-with-context.zip .
+      
+    - name: Upload extension ZIP as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: translate-with-context
+        path: translate-with-context.zip
+        retention-days: 7 
