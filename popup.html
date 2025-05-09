@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Translate With Context</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      margin: 0;
+      padding: 0;
+      width: 350px;
+      background-color: #f9f9f9;
+    }
+    
+    .container {
+      padding: 16px;
+    }
+    
+    header {
+      background-color: #4e54c8;
+      color: white;
+      padding: 16px;
+      text-align: center;
+    }
+    
+    h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 500;
+    }
+    
+    .tabs {
+      display: flex;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    .tab {
+      padding: 8px 16px;
+      cursor: pointer;
+      flex: 1;
+      text-align: center;
+      color: #666;
+    }
+    
+    .tab.active {
+      color: #4e54c8;
+      border-bottom: 2px solid #4e54c8;
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    .settings-form {
+      background-color: white;
+      padding: 16px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .form-group {
+      margin-bottom: 16px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+      color: #555;
+    }
+    
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    
+    button {
+      background-color: #4e54c8;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      width: 100%;
+    }
+    
+    button:hover {
+      background-color: #3c43a5;
+    }
+    
+    .status-message {
+      margin-top: 8px;
+      font-size: 12px;
+      text-align: center;
+    }
+    
+    .success {
+      color: #2e7d32;
+    }
+    
+    .error {
+      color: #d32f2f;
+    }
+    
+    .saved-items {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    
+    .saved-item {
+      background-color: white;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .word {
+      font-weight: 500;
+      color: #4e54c8;
+      margin-bottom: 4px;
+    }
+    
+    .context {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .translation {
+      font-size: 13px;
+      color: #333;
+    }
+    
+    .timestamp {
+      font-size: 11px;
+      color: #999;
+      text-align: right;
+      margin-top: 4px;
+    }
+    
+    .empty-state {
+      text-align: center;
+      color: #666;
+      padding: 24px 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Translate With Context</h1>
+  </header>
+  
+  <div class="container">
+    <div class="tabs">
+      <div class="tab active" data-tab="settings">Settings</div>
+      <div class="tab" data-tab="saved">Saved Translations</div>
+    </div>
+    
+    <div class="tab-content active" id="settings">
+      <div class="settings-form">
+        <div class="form-group">
+          <label for="api-key">OpenAI API Key</label>
+          <input type="text" id="api-key" placeholder="Enter your API key">
+        </div>
+        <button id="save-settings">Save Settings</button>
+        <div class="status-message" id="settings-status"></div>
+      </div>
+    </div>
+    
+    <div class="tab-content" id="saved">
+      <div class="saved-items" id="saved-items-container">
+        <!-- Saved translations will be displayed here -->
+      </div>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html> 
